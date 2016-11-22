@@ -39,11 +39,11 @@ public class UsuarioService {
     @GET
     @Path("/{nick}/{password}")
     public Response logIn(@PathParam("nick") String nick,@PathParam("password") String password ){
-        boolean login;
+        String login;
         try {
-            login = m.usuarioManager.login(nick, password);
+            login = m.usuarioManager.login(nick, password).toString();
         }catch (Exception e){
-            return Response.status(200).entity(e).build();
+            return Response.status(403).entity("false").build();
         }
         return Response.status(200).entity(login).build();
     }

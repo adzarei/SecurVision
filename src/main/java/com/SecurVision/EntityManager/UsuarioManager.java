@@ -27,7 +27,6 @@ public class UsuarioManager {
 
     public Boolean login(String nick, String password) throws SQLException {
         return a.usuarioAccessor.login(nick,password);
-
     }
 }
 

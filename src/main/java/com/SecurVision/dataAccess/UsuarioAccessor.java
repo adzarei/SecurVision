@@ -44,7 +44,7 @@ public class UsuarioAccessor {
                 u.setHoraUltimoCheckeo(rs.getTimestamp("hora").toString());
                 usrlist.add(u);
             }
-            }
+        }
         return usrlist;
     }
 
@@ -57,34 +57,13 @@ public class UsuarioAccessor {
         ps.setString(1,nick);
         ps.setString(2,password);
         ResultSet rs = ps.executeQuery();
-        ArrayList<Usuario> usr = new ArrayList<>();
         try{
-            if(rs.getString("Persona_dni").equals(""))
+            if(rs.next())
                 return true;
             else return false;
         }catch(Exception e){
             return false;
         }
     }
-    /*
-    public ArrayList<Usuario> readResultSet(ResultSet rs) throws SQLException {
-        ArrayList<Usuario> usrlist = new ArrayList<>();
-        while (rs.next()) {
-            Usuario u = new Usuario();
-            u.setDni(rs.getString("dni"));
-            u.setNombre(rs.getString("nombre"));
-            u.setApellidos(rs.getString("apellidos"));
-
-            try{
-                u.setHoraUltimoCheckeo(rs.getTimestamp("hora").toString());
-            }catch (Exception e){
-
-            }
-
-            usrlist.add(u);
-        }
-        return usrlist;
-    }
-    */
 }
 

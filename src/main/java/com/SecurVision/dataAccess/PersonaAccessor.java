@@ -79,7 +79,7 @@ public class PersonaAccessor {
 
     public boolean createPerson(Persona persona) throws SQLException {
         String query = "INSERT INTO Persona (dni, nombre, apellidos, Nivel_id, Horario_Evento_id, isUsuario) " +
-                "              VALUES (?, ?, ?, ?, ? , ? , ?)";
+                "              VALUES (?, ?, ?, ?, ? , ?)";
 
         PreparedStatement ps;
         ps = conn.prepareStatement(query);
@@ -91,7 +91,7 @@ public class PersonaAccessor {
         ps.setString(6, persona.getIsUsuario());
 
         try {
-            ps.executeQuery();
+            ps.executeUpdate();
         }catch (SQLException e){
             throw new SQLException(e);
         }

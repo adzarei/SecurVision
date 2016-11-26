@@ -1,6 +1,5 @@
 package com.SecurVision.EntityManager;
 
-import com.SecurVision.ObjectModel.Persona;
 import com.SecurVision.ObjectModel.Usuario;
 import com.SecurVision.dataAccess.Accessors;
 import org.json.JSONObject;
@@ -20,7 +19,7 @@ public class UsuarioManager {
 
 
     public Usuario getUsuarioByDni(String dni){
-        return a.usuarioAccessor.getUsuarioByDni(dni);
+        return null;//a.usuarioAccessor.getUsuarioByDni(dni);
     }
 
     public GenericEntity<List<Usuario>> getUsuarioByZona(int zid) throws SQLException {
@@ -32,6 +31,25 @@ public class UsuarioManager {
     }
 
 
+    public boolean createUsuario(String json) throws SQLException {
+        JSONObject jo = new JSONObject(json);
+
+        String dni = jo.getString("dni");
+        String nombre = jo.getString("nombre");
+        String apellidos = jo.getString("apellidos");
+        String username = jo.getString("username");
+        String password = jo.getString("password");
+        String tipo = jo.getString("tipo");
+
+        Usuario usr = new Usuario(dni,nombre,apellidos,username,password,tipo);
+
+        try {
+            return a.usuarioAccessor.createUsuario(usr);
+        } catch (SQLException e) {
+            throw new SQLException(e);//Debugg.
+            //return false;
+        }
+    }
 }
 
 

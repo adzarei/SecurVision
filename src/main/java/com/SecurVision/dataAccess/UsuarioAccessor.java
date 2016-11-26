@@ -17,9 +17,6 @@ public class UsuarioAccessor {
     public UsuarioAccessor(Connection conn){
         this.conn = conn;
     }
-    public Usuario getUsuarioByDni(String dni) {
-        return new Usuario(dni, "Adri", "Zapman", "ADZAREI", "lolipop");
-    }
 
     public ArrayList <Usuario> getUsuarioByZona(int zid) throws SQLException {
         String query = "SELECT * FROM( SELECT p.dni,p.nombre,p.apellidos,c.idChekeo,c.hora,c.Zona_id" +
@@ -64,6 +61,20 @@ public class UsuarioAccessor {
         }catch(Exception e){
             return false;
         }
+    }
+
+    public boolean createUsuario(Usuario usr) throws SQLException{
+        String query = "INSERT INTO `SecureVision`.`Usuario` (`nick`, `contrasenya`, `tipo`, `Persona_dni`) " +
+                "              VALUES (?, ?, ?, ?)";
+        PreparedStatement ps;
+        ps = conn.prepareStatement(query);
+
+        ps.setString(1,usr.getUsername());
+        ps.setString(2,usr.getPassword());
+        ps.setString(3,usr.getTipo());
+        ps.setString(4,usr.getDni());
+
+        return ps.executeUpdate() > 0; //si es > 0 se ha borrado algún usuario.
     }
 }
 

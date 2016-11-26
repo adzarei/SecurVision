@@ -25,7 +25,7 @@ public class PersonaManager {
         return  new GenericEntity<List<Persona>>(a.personaAccessor.getPersonaByZona(zid)){};
     }
 
-    public boolean createPersonax(String jsonString) throws SQLException {
+    public boolean createPersona(String jsonString) throws SQLException {
         JSONObject jo = new JSONObject(jsonString);
 
         String dni = jo.getString("dni");
@@ -36,8 +36,12 @@ public class PersonaManager {
         String isUsuario = jo.getString("isUsuario");
 
         Persona persona = new Persona(dni,nombre,apellidos,nivel_id,horario_id,isUsuario);
-
-        a.personaAccessor.createPerson(persona);
+        try {
+            a.personaAccessor.createPerson(persona);
+        }catch(SQLException e){
+            //throw new SQLException(e); //Debugg.
+            return false;
+        }
         return true;
     }
 

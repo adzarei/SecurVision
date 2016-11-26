@@ -3,12 +3,10 @@ package com.SecurVision.webservice;
 import com.SecurVision.EntityManager.Managers;
 import com.SecurVision.ObjectModel.Usuario;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 /**
  * Created by adrian on 25/10/2016.
@@ -47,4 +45,21 @@ public class UsuarioService {
         }
         return Response.status(200).entity(login).build();
     }
+
+    @POST
+    @Path("/new")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response createUsuario(String json){
+        Boolean res;
+        try {
+            res = m.usuarioManager.createUsuario(json);
+        } catch (SQLException e) {
+            return Response.status(403).entity(e.getMessage()).build();
+        }
+
+        return Response.status(200).entity(res.toString()).build();
+    }
+
+    //TODO: deleteUsuario.
 }

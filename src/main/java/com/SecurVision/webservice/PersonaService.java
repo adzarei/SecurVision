@@ -8,7 +8,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -21,7 +20,7 @@ public class PersonaService {
     @Produces({MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
     public Response getPersonas(){
         return Response.status(403).build();
-    }
+    } //TODO: GetPersonas.
 
     @GET
     @Path("/{dni}")
@@ -67,15 +66,14 @@ public class PersonaService {
     public Response createPersona(String jsonString){
         Boolean res;
         try {
-            m.personaManager.createPersonax(jsonString);
-            res = true;
+            res = m.personaManager.createPersona(jsonString);
         } catch (Exception e) {
             e.printStackTrace();
-            res = false;
+            return Response.status(403).entity(e.getMessage()).build();
         }
 
-        return Response.status(201).entity(res).build();
+        return Response.status(201).entity(res.toString()).build(); //boolean not available for MessageBodyWriter;
     }
 
-
+    //TODO: deletePersona.
 }

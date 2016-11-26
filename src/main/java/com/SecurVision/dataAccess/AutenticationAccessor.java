@@ -26,16 +26,7 @@ public class AutenticationAccessor {
                                         .header("app_id", Constants.KUSER)
                                         .header("app_key",Constants.KKEY)
                                         .post(Entity.entity(body,MediaType.APPLICATION_JSON));
-        //target.request().header("Content-Type:","application/json");
-/*
-        Form form = new Form();
-        form.param("app_id", Constants.KUSER);
-        form.param("app_key", Constants.KKEY);
-*/
 
-        //System.out.println(body);
-
-        //Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(body,MediaType.APPLICATION_FORM_URLENCODED_TYPE));
         System.out.println(response.getStatus()+" : "+response.getStatusInfo());
         String res = response.readEntity(String.class);
         System.out.println(res);

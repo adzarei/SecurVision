@@ -1,7 +1,9 @@
 package com.SecurVision.EntityManager;
 
+import com.SecurVision.ObjectModel.Persona;
 import com.SecurVision.ObjectModel.Usuario;
 import com.SecurVision.dataAccess.Accessors;
+import org.json.JSONObject;
 
 import javax.ws.rs.core.GenericEntity;
 import java.sql.SQLException;
@@ -28,6 +30,8 @@ public class UsuarioManager {
     public Boolean login(String nick, String password) throws SQLException {
         return a.usuarioAccessor.login(nick,password);
     }
+
+
 }
 
 

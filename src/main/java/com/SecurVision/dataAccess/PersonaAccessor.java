@@ -59,6 +59,7 @@ public class PersonaAccessor {
         }
             return perlist;
     }
+
     public ArrayList<Persona> readResultSet(ResultSet rs) throws SQLException {
         ArrayList<Persona> perlist = new ArrayList<>();
         while (rs.next()) {
@@ -69,13 +70,33 @@ public class PersonaAccessor {
 
             try{
                 p.setHoraUltimoCheckeo(rs.getTimestamp("hora").toString());
-            }catch (Exception e){
-
-            }
+            }catch (Exception e){}
 
             perlist.add(p);
         }
         return perlist;
     }
+
+    public boolean createPerson(Persona persona) throws SQLException {
+        String query = "INSERT INTO Persona (dni, nombre, apellidos, Nivel_id, Horario_Evento_id, isUsuario) " +
+                "              VALUES (?, ?, ?, ?, ? , ? , ?)";
+
+        PreparedStatement ps;
+        ps = conn.prepareStatement(query);
+        ps.setString(1, persona.getDni());
+        ps.setString(2, persona.getNombre());
+        ps.setString(3, persona.getApellidos());
+        ps.setString(4, persona.getNivel_id());
+        ps.setString(5, persona.getHorario_id());
+        ps.setString(6, persona.getIsUsuario());
+
+        try {
+            ps.executeQuery();
+        }catch (SQLException e){
+            throw new SQLException(e);
+        }
+        return true;
+    }
+
 }
 

@@ -4,10 +4,7 @@ import com.SecurVision.EntityManager.Managers;
 import com.SecurVision.ObjectModel.Checkeo;
 import com.SecurVision.ObjectModel.Persona;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -60,6 +57,17 @@ public class PersonaService {
 
 
         return Response.status(200).entity(null).build();
+    }
+
+    @POST
+    @Path("/new")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createPersona(String jsonString){
+        m.usuarioManager.createPersonax(jsonString);
+
+
+        return Response.status(201).entity(jsonString).build();
     }
 
 

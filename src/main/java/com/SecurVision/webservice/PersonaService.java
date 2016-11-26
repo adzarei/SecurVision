@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -64,10 +65,16 @@ public class PersonaService {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response createPersona(String jsonString){
-        m.usuarioManager.createPersonax(jsonString);
+        Boolean res;
+        try {
+            m.personaManager.createPersonax(jsonString);
+            res = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            res = false;
+        }
 
-
-        return Response.status(201).entity(jsonString).build();
+        return Response.status(201).entity(res).build();
     }
 
 

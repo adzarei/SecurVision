@@ -38,7 +38,6 @@ public class PersonaManager {
         Persona persona = new Persona(dni,nombre,apellidos,nivel_id,horario_id,isUsuario);
 
         a.personaAccessor.createPerson(persona);
-
         return true;
     }
 

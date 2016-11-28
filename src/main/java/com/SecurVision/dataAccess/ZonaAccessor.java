@@ -23,6 +23,7 @@ public class ZonaAccessor {
         ResultSet rs = ps.executeQuery();
 
         ArrayList<Zona> zonas = readResultSet(rs);
+        ps.close();
         return zonas;
     }
     public ArrayList<Zona> readResultSet(ResultSet rs) throws SQLException {
@@ -33,6 +34,7 @@ public class ZonaAccessor {
             z.setDescripcion(rs.getString("descripcion"));
             zonas.add(z);
         }
+        rs.close();
         return zonas;
     }
 }

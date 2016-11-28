@@ -19,8 +19,14 @@ public class PersonaService {
     @GET
     @Produces({MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
     public Response getPersonas(){
-        return Response.status(403).build();
-    } //TODO: GetPersonas.
+        try {
+            GenericEntity<List<Persona>> entity = m.personaManager.getPersonas();
+            return Response.status(200).entity(entity).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(403).entity(e.getMessage()).build();
+        }
+    }
 
     @GET
     @Path("/{dni}")
@@ -75,5 +81,20 @@ public class PersonaService {
         return Response.status(201).entity(res.toString()).build(); //boolean not available for MessageBodyWriter;
     }
 
-    //TODO: deletePersona.
+    @DELETE
+    @Path("/{dni}/delete")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.TEXT_PLAIN})
+    public Response deletePersona(@PathParam("dni") String dni){
+        Boolean res ;
+        try {
+            res = m.personaManager.deletePersona(dni);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(403).entity(e.getMessage()).build();
+        }
+
+        return Response.status(200).entity(res.toString()).build();
+
+    }
 }

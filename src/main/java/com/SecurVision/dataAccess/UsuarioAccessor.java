@@ -76,5 +76,38 @@ public class UsuarioAccessor {
 
         return ps.executeUpdate() > 0; //si es > 0 se ha borrado algún usuario.
     }
+
+    public boolean deleteUsuario(String dni) throws SQLException {
+        String query = "DELETE FROM Usuario " +
+                "               WHERE Persona_dni = ?";
+        PreparedStatement ps;
+        ps = conn.prepareStatement(query);
+
+        ps.setString(1,dni);
+        int rs = ps.executeUpdate();
+        ps.close();
+        return rs >0;
+    }
+
+    public boolean isUsuario(String dni) throws SQLException {
+        String query = "SELECT isUsuario FROM Persona" +
+                "                        WHERE dni = ?";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1,dni);
+        ResultSet rs;
+        try {
+             rs = ps.executeQuery();
+        }catch (SQLException e){
+            return false;
+        }
+        boolean res = false;
+        if(rs.next())
+            res = rs.getInt("isUsuario") == 1;
+
+        rs.close();
+        ps.close();
+        return res ;
+    }
 }
 

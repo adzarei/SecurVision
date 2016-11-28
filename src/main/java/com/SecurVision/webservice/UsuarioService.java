@@ -60,5 +60,4 @@ public class UsuarioService {
 
         return Response.status(200).entity(res.toString()).build();
     }
-    //TODO: deleteUsuario.
 }

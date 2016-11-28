@@ -45,3 +45,6 @@ public class Accessors {
         return ourInstance;
     }
 }
+
+
+//TODO: Close all PreparedStatements and ResultSets.

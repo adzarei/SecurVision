@@ -39,10 +39,20 @@ public class PersonaManager {
         try {
             a.personaAccessor.createPerson(persona);
         }catch(SQLException e){
-            //throw new SQLException(e); //Debugg.
-            return false;
+            throw new SQLException(e); //Debugg.
+            //return false;
         }
         return true;
     }
 
+    public GenericEntity<List<Persona>> getPersonas() throws SQLException {
+        return new  GenericEntity<List<Persona>>(a.personaAccessor.getPersonas()){};
+    }
+
+    public boolean deletePersona(String dni) throws SQLException {
+        if (a.usuarioAccessor.isUsuario(dni))
+            a.usuarioAccessor.deleteUsuario(dni);
+
+        return a.personaAccessor.deletePersona(dni);
+    }
 }

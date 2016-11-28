@@ -1,8 +1,12 @@
 package com.SecurVision.dataAccess;
 import com.SecurVision.ObjectModel.Persona;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by adrian on 25/10/2016.
@@ -19,10 +23,9 @@ public class PersonaAccessor {
 
 
         String query = "SELECT * FROM SecureVision.Persona WHERE dni = ?";
-        PreparedStatement ps;
-            ps = conn.prepareStatement(query);
+        PreparedStatement ps = conn.prepareStatement(query);
 
-            ps.setString(1, dni);
+        ps.setString(1, dni);
             ResultSet rs = ps.executeQuery();
             ArrayList<Persona> perlist = readResultSet(rs);
             Persona p = new Persona();
@@ -42,8 +45,7 @@ public class PersonaAccessor {
                 "                        ) AS x" +
                 "                 GROUP BY x.dni";
 
-        PreparedStatement ps;
-        ps = conn.prepareStatement(query);
+        PreparedStatement ps = conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
         ArrayList<Persona> perlist = new ArrayList<>();
         while (rs.next()) {
@@ -81,8 +83,7 @@ public class PersonaAccessor {
         String query = "INSERT INTO Persona (dni, nombre, apellidos, Nivel_id, Horario_Evento_id, isUsuario) " +
                 "              VALUES (?, ?, ?, ?, ? , ?)";
 
-        PreparedStatement ps;
-        ps = conn.prepareStatement(query);
+        PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, persona.getDni());
         ps.setString(2, persona.getNombre());
         ps.setString(3, persona.getApellidos());
@@ -98,5 +99,39 @@ public class PersonaAccessor {
         return true;
     }
 
+    public List<Persona> getPersonas() throws SQLException {
+
+        String query = "SELECT * FROM Persona";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        return readPersonas(rs);
+    }
+
+    private List<Persona> readPersonas(ResultSet rs ) throws SQLException {
+
+        ArrayList<Persona> perlist = new ArrayList<>();
+        while (rs.next()) {
+                Persona p = new Persona();
+                p.setDni(rs.getString("dni"));
+                p.setNombre(rs.getString("nombre"));
+                p.setApellidos(rs.getString("apellidos"));
+                perlist.add(p);
+        }
+        return perlist;
+    }
+
+    public boolean deletePersona(String dni) throws SQLException {
+
+        String query = "DELETE FROM Persona" +
+                "               WHERE dni = ?";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1,dni);
+        int rs = ps.executeUpdate();
+
+        return rs > 0;
+
+    }
 }
 

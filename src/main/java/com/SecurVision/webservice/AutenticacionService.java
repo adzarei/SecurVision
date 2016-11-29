@@ -29,8 +29,7 @@ public class AutenticacionService {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.TEXT_PLAIN})
     public Response uploadPdfFile(  @FormDataParam("file") InputStream fileInputStream,
-                                    @FormDataParam("file") FormDataContentDisposition fileMetaData) throws Exception
-    {
+                                    @FormDataParam("file") FormDataContentDisposition fileMetaData) throws Exception{
         if(fileMetaData==null)
             return Response.status(403).entity("false").build();
         try {
@@ -43,5 +42,23 @@ public class AutenticacionService {
             fileInputStream.close();
             return Response.status(403).entity("false").build();
         }
+    }
+
+    @POST
+    @Path("/imagen/new")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response uploadImagen(String jsonStr){
+        Boolean res;
+
+        try {
+            res = m.autenticacionManager.uploadImagen(jsonStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(403).entity(e).build();
+        }
+
+
+        return Response.status(201).entity(res.toString()).build();
     }
 }

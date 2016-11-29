@@ -19,7 +19,7 @@ public class AutenticationAccessor {
     public String recognize(String base64Img){
         final Client client = ClientBuilder.newBuilder().register(String.class).build();
         String body = "{\"image\":\""+base64Img+"\"," +
-                "\"gallery_name\":\"SecurVision\"}";
+                "\"gallery_name\":\""+Constants.GALLERY_NAME+"\"}";
 
         Response response = client.target("https://api.kairos.com/recognize")
                                         .request(MediaType.APPLICATION_JSON)
@@ -31,6 +31,25 @@ public class AutenticationAccessor {
         String res = response.readEntity(String.class);
         System.out.println(res);
 
+        response.close();
+        client.close();
         return res;
+    }
+
+    public String uploadImagen(String dni, String imagen){
+        final Client client = ClientBuilder.newBuilder().register(String.class).build();
+        String body = "{" +
+                "\"image\":\""          +imagen                  +"\"," +
+                "\"subject_id\":\""     +dni                     +"\"," +
+                "\"gallery_name\":\""   +Constants.GALLERY_NAME  +"\"" +
+                "}";
+
+        Response response = client.target("https://api.kairos.com/enroll")
+                .request(MediaType.APPLICATION_JSON)
+                .header("app_id", Constants.KUSER)
+                .header("app_key",Constants.KKEY)
+                .post(Entity.entity(body,MediaType.APPLICATION_JSON));
+
+        return response.readEntity(String.class);
     }
 }

@@ -33,8 +33,8 @@ public class AutenticacionManager {
 
         try{
             JSONObject aux = jo.getJSONArray("images").getJSONObject(0);
-            String ans = aux.getJSONObject("transaction").getString("confidence");
-            if (Double.parseDouble(ans) > 0.5)
+            Double ans = aux.getJSONObject("transaction").getDouble("confidence");
+            if (ans > 0.5)
                 return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -42,5 +42,32 @@ public class AutenticacionManager {
         }
 
         return false;
+    }
+
+    public boolean uploadImagen(String jsonStr) throws Exception {
+        JSONObject jo = new JSONObject(jsonStr);
+        String dni;
+        String imagen;
+        try{
+            dni = jo.getString("dni");
+            imagen = jo.getString("imagen");
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new Exception(e);
+        }
+
+        String res = a.autenticationAccessor.uploadImagen(dni, imagen);
+        System.out.println(res);//Debug.
+        boolean acomplished = false;
+        try {
+            jo = new JSONObject(res);
+            JSONObject aux = jo.getJSONArray("images").getJSONObject(0);
+            acomplished = aux.getJSONObject("transaction").getString("status").contains("success");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return acomplished;
+
     }
 }

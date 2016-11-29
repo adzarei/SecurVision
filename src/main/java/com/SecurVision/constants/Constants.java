@@ -11,4 +11,5 @@ public class Constants {
     public static final String PASSWORD = "Proy3ctoP1n";
     public static final String KUSER ="16686c87";
     public static final String KKEY="ba34431f707d29f10198918643d9eb7e";
+    public static final String GALLERY_NAME = "SecurVisionPin";
 }

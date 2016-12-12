@@ -29,7 +29,7 @@ public class ZonaManager {
         return a.zonaAccessor.createZona(id,desc);
     }
 
-    public Boolean deleteZona(String zid) {
+    public Boolean deleteZona(String zid) throws SQLException {
 
         return a.zonaAccessor.deleteZona(zid);
     }

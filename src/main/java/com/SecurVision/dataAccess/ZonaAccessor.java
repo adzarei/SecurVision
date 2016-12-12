@@ -45,9 +45,14 @@ public class ZonaAccessor {
         ps.setString(1,id);
         ps.setString(2,desc);
 
-        boolean res = false;
-        if(ps.executeUpdate()==1)
-            res = true;
-        return res;
+        return ps.executeUpdate() == 1;
+    }
+
+    public Boolean deleteZona(String zid) throws SQLException {
+        String query ="DELETE FROM Zona WHERE id=?";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1,zid);
+        return ps.executeUpdate() > 0;
     }
 }

@@ -28,4 +28,9 @@ public class ZonaManager {
 
         return a.zonaAccessor.createZona(id,desc);
     }
+
+    public Boolean deleteZona(String zid) {
+
+        return a.zonaAccessor.deleteZona(zid);
+    }
 }

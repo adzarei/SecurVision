@@ -5,6 +5,7 @@ import com.SecurVision.ObjectModel.Persona;
 import com.SecurVision.ObjectModel.Usuario;
 import com.SecurVision.ObjectModel.Zona;
 
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -83,6 +84,24 @@ public class ZonaService {
         }
 
         return Response.status(200).entity(res.toString()).build();
+    }
+
+    @DELETE
+    @Path("/{zid}/delete")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response deleteZona(@PathParam("zid")String zid){
+        Boolean res;
+        try{
+            res = m.zonaManager.deleteZona(zid);
+        }catch(Exception e){
+            e.printStackTrace();
+            return Response.status(403).entity(e.getMessage()).build();
+        }
+        return Response.status(200).entity(res.toString()).build();
+
+
+
+
     }
 
 

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by adrian on 26/10/2016.
@@ -109,5 +110,27 @@ public class UsuarioAccessor {
         ps.close();
         return res ;
     }
+
+    public List<Usuario> getUsuarios() throws SQLException {
+        List<Usuario> usrList = new ArrayList<>();
+
+        String query = "SELECT u.nick, u.tipo, u.Persona_dni ,p.nombre,p.apellidos,u.contrasenya " +
+                "               From Usuario u ,Persona p " +
+                "               WHERE u.Persona_dni = p.dni";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+        ResultSet rs  = ps.executeQuery();
+        while (rs.next()){
+            String username = rs.getString(1);
+            String tipo =  rs.getString(2);
+            String dni =   rs.getString(3);
+            String nombre = rs.getString(4);
+            String apellidos = rs.getString(5);
+            String password = rs.getString(6);
+            usrList.add(new Usuario(dni,nombre,apellidos,username,password,tipo));
+        }
+        return usrList;
+    }
+
 }
 

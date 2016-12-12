@@ -5,15 +5,11 @@ import com.SecurVision.ObjectModel.Persona;
 import com.SecurVision.ObjectModel.Usuario;
 import com.SecurVision.ObjectModel.Zona;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,5 +69,21 @@ public class ZonaService {
 
         }
     }
+
+    @POST
+    @Path("/new")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response createUsuario(String json){
+        Boolean res;
+        try {
+            res = m.zonaManager.createZona(json);
+        } catch (SQLException e) {
+            return Response.status(403).entity(e.getMessage()).build();
+        }
+
+        return Response.status(200).entity(res.toString()).build();
+    }
+
 
 }

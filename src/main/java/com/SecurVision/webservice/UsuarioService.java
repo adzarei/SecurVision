@@ -4,9 +4,11 @@ import com.SecurVision.EntityManager.Managers;
 import com.SecurVision.ObjectModel.Usuario;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by adrian on 25/10/2016.
@@ -17,7 +19,17 @@ public class UsuarioService {
     @GET
     @Produces({MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
     public Response getUsuarios(){
-        return Response.status(403).build();
+
+
+        GenericEntity<List<Usuario>> entity;
+        try {
+            entity = m.usuarioManager.getUsuarios();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(403).entity(e.getMessage()).build();
+        }
+
+        return Response.status(200).entity(entity).build();
     }
 
     @GET
@@ -58,6 +70,20 @@ public class UsuarioService {
             return Response.status(403).entity(e.getMessage()).build();
         }
 
+        return Response.status(200).entity(res.toString()).build();
+    }
+
+    @DELETE
+    @Path("/{dni}/delete")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response deleteUsusario(@PathParam("dni")String dni){
+        Boolean res;
+        try{
+            res = m.usuarioManager.deleteUsuario(dni);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Response.status(403).entity(e.getMessage()).build();
+        }
         return Response.status(200).entity(res.toString()).build();
     }
 }

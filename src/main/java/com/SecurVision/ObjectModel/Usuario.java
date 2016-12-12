@@ -15,6 +15,7 @@ public class Usuario extends Persona {
     public Usuario(String username, String password) {
         this.username = username;
         this.password = password;
+        this.tipo = "1";
     }
 
     public String getUsername() {

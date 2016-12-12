@@ -51,6 +51,13 @@ public class UsuarioManager {
         }
     }
 
+    public GenericEntity<List<Usuario>> getUsuarios() throws SQLException {
+        return new  GenericEntity<List<Usuario>>(a.usuarioAccessor.getUsuarios()){};
+    }
+
+    public Boolean deleteUsuario(String dni) throws SQLException {
+        return a.usuarioAccessor.deleteUsuario(dni);
+    }
 }
 
 

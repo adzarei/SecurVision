@@ -18,4 +18,9 @@ public class ZonaManager {
     public GenericEntity<List<Zona>> getZonas() throws SQLException {
         return new GenericEntity<List<Zona>>(a.zonaAccessor.getZonas()){};
     }
+
+    public Boolean createZona(String json) {
+
+
+    }
 }

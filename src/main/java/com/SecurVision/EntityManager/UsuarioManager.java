@@ -58,6 +58,20 @@ public class UsuarioManager {
     public Boolean deleteUsuario(String dni) throws SQLException {
         return a.usuarioAccessor.deleteUsuario(dni);
     }
+
+    public Boolean updateUsuario(String json) {
+        JSONObject jo = new JSONObject(json);
+
+        String dni = jo.getString("dni");
+        String nombre = jo.getString("nombre");
+        String apellidos = jo.getString("apellidos");
+        String username = jo.getString("username");
+        String password = jo.getString("password");
+        String tipo = jo.getString("tipo");
+
+        Usuario usr = new Usuario(dni,nombre,apellidos,username,password,tipo);
+        return a.usuarioAccessor.upsateUsuario(usr);
+    }
 }
 
 

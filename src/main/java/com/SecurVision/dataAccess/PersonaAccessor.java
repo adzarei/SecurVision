@@ -84,13 +84,7 @@ public class PersonaAccessor {
                 "              VALUES (?, ?, ?, ?, ? , ?)";
 
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, persona.getDni());
-        ps.setString(2, persona.getNombre());
-        ps.setString(3, persona.getApellidos());
-        ps.setString(4, persona.getNivel_id());
-        ps.setString(5, persona.getHorario_id());
-        ps.setString(6, persona.getIsUsuario());
-
+        loadStatementWithPersona(persona,ps);
         try {
             ps.executeUpdate();
         }catch (SQLException e){
@@ -132,6 +126,28 @@ public class PersonaAccessor {
 
         return rs > 0;
 
+    }
+
+    public Boolean updatePersona(Persona persona) throws SQLException {
+        String query = "UPDATE Persona" +
+                "       SET dni = ?, nombre = ?, apellidos = ?" +
+                "           ,Nivel_id = ?, Horario_Evento_id = ?, isUsuario = ? " +
+                "           WHERE dni = ?";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+        loadStatementWithPersona(persona,ps);
+        ps.setString(7, persona.getDni());
+
+        return ps.executeUpdate()>0;
+    }
+
+    private void loadStatementWithPersona(Persona persona, PreparedStatement ps) throws SQLException {
+        ps.setString(1, persona.getDni());
+        ps.setString(2, persona.getNombre());
+        ps.setString(3, persona.getApellidos());
+        ps.setString(4, persona.getNivel_id());
+        ps.setString(5, persona.getHorario_id());
+        ps.setString(6, persona.getIsUsuario());
     }
 }
 

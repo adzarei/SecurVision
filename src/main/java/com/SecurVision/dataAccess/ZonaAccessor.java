@@ -45,7 +45,7 @@ public class ZonaAccessor {
         ps.setString(1,id);
         ps.setString(2,desc);
 
-        return ps.executeUpdate() == 1;
+        return ps.executeUpdate() >0;
     }
 
     public Boolean deleteZona(String zid) throws SQLException {

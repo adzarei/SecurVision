@@ -86,4 +86,18 @@ public class UsuarioService {
         }
         return Response.status(200).entity(res.toString()).build();
     }
+
+    @POST
+    @Path("/update")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response updatePersona(String json){
+        try {
+            Boolean res = m.usuarioManager.updateUsuario(json);
+            return Response.status(201).entity(res.toString()).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(403).entity(e.getMessage()).build();
+        }
+    }
 }

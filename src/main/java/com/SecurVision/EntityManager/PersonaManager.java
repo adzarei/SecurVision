@@ -55,4 +55,18 @@ public class PersonaManager {
 
         return a.personaAccessor.deletePersona(dni);
     }
+
+    public Boolean updatePersona(String json) throws SQLException {
+        JSONObject jo = new JSONObject(json);
+
+        String dni = jo.getString("dni");
+        String nombre = jo.getString("nombre");
+        String apellidos = jo.getString("apellidos");
+        String nivel_id = jo.getString("nivel_id");
+        String horario_id = jo.getString("horario_id");
+        String isUsuario = jo.getString("isUsuario");
+
+        Persona persona = new Persona(dni,nombre,apellidos,nivel_id,horario_id,isUsuario);
+        return a.personaAccessor.updatePersona(persona);
+    }
 }

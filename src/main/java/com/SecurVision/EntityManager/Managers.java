@@ -15,6 +15,7 @@ public class Managers {
     public UsuarioManager       usuarioManager;
     public ZonaManager          zonaManager;
     public AutenticacionManager autenticacionManager;
+    public NivelManager         nivelManager;
 
 
 
@@ -25,6 +26,7 @@ public class Managers {
         this.checkeoManager = new CheckeoManager(accessors);
         this.usuarioManager = new UsuarioManager(accessors);
         this.zonaManager    = new ZonaManager(accessors);
+        this.nivelManager   = new NivelManager(accessors);
         this.autenticacionManager = new AutenticacionManager(accessors);
     }
 

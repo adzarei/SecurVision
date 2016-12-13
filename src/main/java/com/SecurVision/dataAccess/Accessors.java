@@ -16,6 +16,7 @@ public class Accessors {
     public UsuarioAccessor usuarioAccessor;
     public ZonaAccessor    zonaAccessor;
     public AutenticationAccessor autenticationAccessor;
+    public NivelAccessor nivelAccessor;
 
     public Connection conn;
 
@@ -33,6 +34,7 @@ public class Accessors {
         this.checkeoAccessor = new CheckeoAccessor(conn);
         this.usuarioAccessor = new UsuarioAccessor(conn);
         this.zonaAccessor    = new ZonaAccessor(conn);
+        this.nivelAccessor   = new NivelAccessor(conn);
         this.autenticationAccessor = new AutenticationAccessor();
     }
 

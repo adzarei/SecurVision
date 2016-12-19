@@ -25,15 +25,16 @@ public class AutenticacionService {
     }
 
     @POST
-    @Path("/imagen")
+    @Path("/imagen/{zid}")
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.TEXT_PLAIN})
     public Response uploadPdfFile(  @FormDataParam("file") InputStream fileInputStream,
-                                    @FormDataParam("file") FormDataContentDisposition fileMetaData) throws Exception{
+                                    @FormDataParam("file") FormDataContentDisposition fileMetaData,
+                                    @PathParam("zid") String zid)throws Exception{
         if(fileMetaData==null)
             return Response.status(403).entity("false").build();
         try {
-            boolean b = m.autenticacionManager.recognize(fileInputStream);
+            boolean b = m.autenticacionManager.recognize(fileInputStream,zid);
             fileInputStream.close();
             return Response.status(201).entity(b).build();
 
@@ -60,5 +61,18 @@ public class AutenticacionService {
 
 
         return Response.status(201).entity(res.toString()).build();
+    }
+
+    @GET
+    @Path("QR/{dni}/{zid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response autenticacionQR(@PathParam("dni") String dni, @PathParam("zid") String zid){
+        Boolean res;
+        try {
+            res = m.autenticacionManager.autenticacionQR(dni, zid);
+        }catch (Exception e){
+            return Response.status(403).entity(e.getMessage()).build();
+        }
+        return Response.status(200).entity(res.toString()).build();
     }
 }

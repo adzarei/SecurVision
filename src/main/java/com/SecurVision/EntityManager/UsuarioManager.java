@@ -59,7 +59,7 @@ public class UsuarioManager {
         return a.usuarioAccessor.deleteUsuario(dni);
     }
 
-    public Boolean updateUsuario(String json) {
+    public Boolean updateUsuario(String json) throws SQLException {
         JSONObject jo = new JSONObject(json);
 
         String dni = jo.getString("dni");
@@ -70,7 +70,7 @@ public class UsuarioManager {
         String tipo = jo.getString("tipo");
 
         Usuario usr = new Usuario(dni,nombre,apellidos,username,password,tipo);
-        return a.usuarioAccessor.upsateUsuario(usr);
+        return a.usuarioAccessor.updateUsuario(usr);
     }
 }
 

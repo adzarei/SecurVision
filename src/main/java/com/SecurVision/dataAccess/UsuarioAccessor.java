@@ -132,15 +132,15 @@ public class UsuarioAccessor {
         return usrList;
     }
 
-    public Boolean upsateUsuario(Usuario usr) throws SQLException {
+    public Boolean updateUsuario(Usuario usr) throws SQLException {
         String query ="UPDATE Usuario " +
-                "           SET nick = ? , contrasenya = ?, tipo = ?,  Persona_dni = ?";
+                "           SET nick = ? , contrasenya = ?, tipo = ?" +
+                "WHERE Persona_dni = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1,usr.getUsername());
         ps.setString(2,usr.getPassword());
         ps.setString(3,usr.getTipo());
         ps.setString(4,usr.getDni());
-
         return ps.executeUpdate()>0;
     }
 }

@@ -35,4 +35,15 @@ public class CheckeoAccessor {
         }
         return checkeoList;
     }
+
+    public void doCheckeo(String dni, String zid,boolean valido) throws SQLException {
+        String query ="INSERT INTO Checkeo (valido, Persona_dni, Zona_id)" +
+                "             VALUES (?, ?,?)";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setBoolean(1,valido);
+        ps.setString(2,dni);
+        ps.setString(3,zid);
+        ps.executeUpdate();
+    }
 }

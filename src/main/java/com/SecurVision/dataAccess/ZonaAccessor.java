@@ -38,12 +38,12 @@ public class ZonaAccessor {
         return zonas;
     }
 
-    public Boolean createZona(String id, String desc) throws SQLException {
-        String query = "INSERT INTO `SecureVision`.`Zona` (`id`, `descripcion`) VALUES (?, ?)";
+    public Boolean createZona(String desc) throws SQLException {
+        String query = "INSERT INTO `SecureVision`.`Zona` ( `descripcion`) VALUES (?, ?)";
 
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1,id);
-        ps.setString(2,desc);
+        //ps.setString(1,id);
+        ps.setString(1,desc);
 
         return ps.executeUpdate() >0;
     }

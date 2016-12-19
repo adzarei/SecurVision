@@ -23,10 +23,10 @@ public class ZonaManager {
     public Boolean createZona(String json) throws SQLException {
         JSONObject jo = new JSONObject(json);
 
-        String id = jo.getString("id");
+        //String id = jo.getString("id");
         String desc = jo.getString("desc");
 
-        return a.zonaAccessor.createZona(id,desc);
+        return a.zonaAccessor.createZona(desc);
     }
 
     public Boolean deleteZona(String zid) throws SQLException {

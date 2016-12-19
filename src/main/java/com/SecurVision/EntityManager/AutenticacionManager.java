@@ -20,11 +20,7 @@ public class AutenticacionManager {
     }
 
 
-    public boolean recognize(InputStream fileInputStream) throws IOException {
-        /*
-        String base64 = Base64.encodeBase64URLSafeString(IOUtils.toByteArray(fileInputStream));
-        */
-
+    public boolean recognize(InputStream fileInputStream, String zid) throws IOException {
         byte[] message = IOUtils.toByteArray(fileInputStream);
         String encoded = DatatypeConverter.printBase64Binary(message);
         String json = a.autenticationAccessor.recognize(encoded);
@@ -34,6 +30,9 @@ public class AutenticacionManager {
         try{
             JSONObject aux = jo.getJSONArray("images").getJSONObject(0);
             Double ans = aux.getJSONObject("transaction").getDouble("confidence");
+            //TODO: Check Identity.
+
+            //TODO: doCheckeo.
             if (ans > 0.5)
                 return true;
         }catch (Exception e){
@@ -69,5 +68,14 @@ public class AutenticacionManager {
 
         return acomplished;
 
+    }
+
+    public boolean autenticacionQR(String dni, String zid) throws Exception {
+        String nombre = a.personaAccessor.getPersonaByDni(dni).getNombre();
+        if (nombre != null && !nombre.isEmpty()) {
+            a.checkeoAccessor.doCheckeo(dni, zid, true);
+            return true;
+        }
+        return false;
     }
 }

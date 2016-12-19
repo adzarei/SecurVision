@@ -19,8 +19,6 @@ public class UsuarioService {
     @GET
     @Produces({MediaType.APPLICATION_JSON,MediaType.TEXT_PLAIN})
     public Response getUsuarios(){
-
-
         GenericEntity<List<Usuario>> entity;
         try {
             entity = m.usuarioManager.getUsuarios();
@@ -31,6 +29,7 @@ public class UsuarioService {
 
         return Response.status(200).entity(entity).build();
     }
+
 
     @GET
     @Path("/{dni}")

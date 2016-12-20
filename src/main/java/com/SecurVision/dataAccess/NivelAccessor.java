@@ -37,8 +37,8 @@ public class NivelAccessor {
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1,id);
         ps.setString(2,desc);
-
-        return ps.executeUpdate()>0;
+        boolean inserted = ps.executeUpdate()>0;
+        return inserted;
     }
 
     public boolean deleteNivel(String id) throws SQLException {
@@ -48,6 +48,14 @@ public class NivelAccessor {
 
         return ps.executeUpdate()>0;
 
+    }
+
+    public boolean nivelHasZona(String zid, String id) throws SQLException {
+        String query2 = "INSERT INTO Zona_has_Nivel(Zona_id,Nivel_id) values (?,?)";
+        PreparedStatement ps2 = conn.prepareStatement(query2);
+        ps2.setString(1,zid);
+        ps2.setString(2,id);
+        return ps2.executeUpdate()>0;
     }
 
 }

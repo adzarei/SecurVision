@@ -149,5 +149,15 @@ public class PersonaAccessor {
         ps.setString(5, persona.getHorario_id());
         ps.setString(6, persona.getIsUsuario());
     }
+
+    public String getNivelId(String dni) throws SQLException {
+        String query = "SELECT Nivel_id FROM Persona WHERE dni = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1,dni);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next())
+            return rs.getString(1);
+        return null;
+    }
 }
 

@@ -56,7 +56,7 @@ public class AutenticacionService {
             res = m.autenticacionManager.uploadImagen(jsonStr);
         } catch (Exception e) {
             e.printStackTrace();
-            return Response.status(403).entity(e).build();
+            return Response.status(403).entity(e.getMessage()).build();
         }
 
 

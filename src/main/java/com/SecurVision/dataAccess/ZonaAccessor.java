@@ -55,4 +55,17 @@ public class ZonaAccessor {
         ps.setString(1,zid);
         return ps.executeUpdate() > 0;
     }
+    public boolean checkPermiso(String zid,String nivel) throws SQLException {
+        String query = "SELECT Nivel_id FROM Zona_has_Nivel WHERE Zona_id = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1,zid);
+        ResultSet rs = ps.executeQuery();
+        boolean res = false;
+        while(rs.next()){
+            res = rs.getString(1).trim().equals(nivel.trim());
+            if(res)
+                break;
+        }
+                return res;
+    }
 }

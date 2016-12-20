@@ -30,17 +30,24 @@ public class AutenticacionManager {
         try{
             JSONObject aux = jo.getJSONArray("images").getJSONObject(0);
             Double ans = aux.getJSONObject("transaction").getDouble("confidence");
-            //TODO: Check Identity.
-
+            String dni = aux.getJSONObject("transaction").getString("subjet_id");
             //TODO: doCheckeo.
-            if (ans > 0.5)
-                return true;
+
+            if (ans > 0.5){
+                String nombre = a.personaAccessor.getPersonaByDni(dni).getNombre();
+                if (nombre != null && !nombre.isEmpty()) {
+                    String nivelId = a.personaAccessor.getNivelId(dni);
+                    if(nivelId != null && a.zonaAccessor.checkPermiso(zid,nivelId)) {
+                        a.checkeoAccessor.doCheckeo(dni, zid, true);
+                        return true;
+                    }
+                }
+            }
+                return false;
         }catch (Exception e){
             e.printStackTrace();
             return false;
         }
-
-        return false;
     }
 
     public boolean uploadImagen(String jsonStr) throws Exception {
@@ -73,8 +80,11 @@ public class AutenticacionManager {
     public boolean autenticacionQR(String dni, String zid) throws Exception {
         String nombre = a.personaAccessor.getPersonaByDni(dni).getNombre();
         if (nombre != null && !nombre.isEmpty()) {
-            a.checkeoAccessor.doCheckeo(dni, zid, true);
-            return true;
+            String nivelId = a.personaAccessor.getNivelId(dni);
+            if(nivelId != null && a.zonaAccessor.checkPermiso(zid,nivelId)) {
+                a.checkeoAccessor.doCheckeo(dni, zid, true);
+                return true;
+            }
         }
         return false;
     }

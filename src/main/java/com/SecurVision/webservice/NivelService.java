@@ -22,9 +22,9 @@ public class NivelService {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getZonas(){
         try {
-            GenericEntity<List<Nivel>> entity = m.nivelManager.getNiverles();
+            GenericEntity<List<Nivel>> entity = m.nivelManager.getNiveles();
             return Response.status(200).entity(entity).build();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Response.status(403).entity(e.getMessage()).build();
         }

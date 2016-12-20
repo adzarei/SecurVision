@@ -31,7 +31,6 @@ public class AutenticacionManager {
             JSONObject aux = jo.getJSONArray("images").getJSONObject(0);
             Double ans = aux.getJSONObject("transaction").getDouble("confidence");
             String dni = aux.getJSONObject("transaction").getString("subjet_id");
-            //TODO: doCheckeo.
 
             if (ans > 0.5){
                 String nombre = a.personaAccessor.getPersonaByDni(dni).getNombre();

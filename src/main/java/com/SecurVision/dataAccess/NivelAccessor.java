@@ -58,4 +58,10 @@ public class NivelAccessor {
         return ps2.executeUpdate()>0;
     }
 
+    public boolean delteZonaHasNivel(String id) throws SQLException {
+        String query = "DELETE FROM Zona_has_Nivel  WHERE Nivel_id = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1,id);
+        return ps.executeUpdate() > 0;
+    }
 }

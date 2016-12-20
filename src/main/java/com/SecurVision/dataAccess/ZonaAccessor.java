@@ -68,4 +68,11 @@ public class ZonaAccessor {
         }
                 return res;
     }
+
+    public boolean deleteZonaHAsNivel(String zid) throws SQLException {
+        String query = "DELETE FROM Zona_has_Nivel  WHERE Zona_id = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1,zid);
+        return ps.executeUpdate() > 0;
+    }
 }

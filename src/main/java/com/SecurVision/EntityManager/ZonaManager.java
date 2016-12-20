@@ -30,7 +30,9 @@ public class ZonaManager {
     }
 
     public Boolean deleteZona(String zid) throws SQLException {
-
-        return a.zonaAccessor.deleteZona(zid);
+        boolean res = a.zonaAccessor.deleteZona(zid);
+        if(res)
+            a.zonaAccessor.deleteZonaHAsNivel(zid);
+        return res;
     }
 }

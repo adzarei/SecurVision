@@ -30,12 +30,12 @@ public class AutenticacionManager {
         try{
             JSONObject aux = jo.getJSONArray("images").getJSONObject(0);
             Double ans = aux.getJSONObject("transaction").getDouble("confidence");
-            String dni = aux.getJSONObject("transaction").getString("subjet_id");
+            String dni = aux.getJSONObject("transaction").getString("subject_id");
 
             if (ans > 0.5){
                 String nombre = a.personaAccessor.getPersonaByDni(dni).getNombre();
                 if (nombre != null && !nombre.isEmpty()) {
-                    String nivelId = a.personaAccessor.getNivelId(dni);
+                    String nivelId = a.personaAccessor.getNivelId(dni.toUpperCase());
                     if(nivelId != null && a.zonaAccessor.checkPermiso(zid,nivelId)) {
                         a.checkeoAccessor.doCheckeo(dni, zid, true);
                         return true;
@@ -61,7 +61,7 @@ public class AutenticacionManager {
             throw new Exception(e);
         }
 
-        String res = a.autenticationAccessor.uploadImagen(dni, imagen);
+        String res = a.autenticationAccessor.uploadImagen(dni.toUpperCase(), imagen);
         System.out.println(res);//Debug.
         boolean acomplished = false;
         try {
@@ -79,7 +79,7 @@ public class AutenticacionManager {
     public boolean autenticacionQR(String dni, String zid) throws Exception {
         String nombre = a.personaAccessor.getPersonaByDni(dni).getNombre();
         if (nombre != null && !nombre.isEmpty()) {
-            String nivelId = a.personaAccessor.getNivelId(dni);
+            String nivelId = a.personaAccessor.getNivelId(dni.toUpperCase());
             if(nivelId != null && a.zonaAccessor.checkPermiso(zid,nivelId)) {
                 a.checkeoAccessor.doCheckeo(dni, zid, true);
                 return true;

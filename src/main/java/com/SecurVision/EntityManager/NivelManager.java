@@ -33,6 +33,9 @@ public class NivelManager {
         return res && a.nivelAccessor.nivelHasZona(zid,id);
 }
     public boolean deleteNivel(String id) throws SQLException {
-        return a.nivelAccessor.deleteNivel(id);
+        boolean res = a.nivelAccessor.deleteNivel(id);
+        if (res)
+            a.nivelAccessor.delteZonaHasNivel(id);
+        return res;
     }
 }

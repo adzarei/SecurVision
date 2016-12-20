@@ -142,7 +142,7 @@ public class PersonaAccessor {
     }
 
     private void loadStatementWithPersona(Persona persona, PreparedStatement ps) throws SQLException {
-        ps.setString(1, persona.getDni());
+        ps.setString(1, persona.getDni().toUpperCase());
         ps.setString(2, persona.getNombre());
         ps.setString(3, persona.getApellidos());
         ps.setString(4, persona.getNivel_id());
